@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proforma</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        section {
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Proforma</h1>
+    </header>
+
+    <section>
+        <h2>Información del Cliente</h2>
+        <p><strong>Nombre:</strong> Cliente Ejemplo</p>
+        <p><strong>Dirección:</strong> Dirección de Ejemplo</p>
+        <p><strong>Email:</strong> cliente@example.com</p>
+    </section>
+
+    <section>
+        <h2>Detalle de Productos</h2>
+        <form>
+            <table class="table table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">Codigo</th>
+                    <th scope="col">Producto</th>
+                    <th scope="col">cantidad </th>
+                    <th scope="col">Precio Unitario</th>
+                    <th scope="col">Total</th>
+                  </tr>
+                </thead>
+              
+                <tbody>
+                  {% for i in ventas %}
+                  <tr>
+                    <th id="cod">{{i.codigo}}</th>
+                    <td id="pd">{{i.producto}}</td>
+                    <td id="cant">{{i.cantidad}}</td>
+                    <td id="puni">{{i.PrecioUnitario}}</td>
+                    <td id="total" class="precio" >{{i.total}}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+          </form>
+    </section>
+    
+    <section>
+        <h2>Resumen</h2>
+            <p><label>Subtotal: <a id="subtotal">dd</a></label></p>
+            <p><strong>Descuento:</strong> $00.00</p>
+            <p><label><strong>Total:</strong> <a id="totales"> $116.00</a></label></p>
+    </section>
+    <footer>
+        <p>Gracias por su preferencia.</p>
+    </footer>
+
+</body>
+<script>
+    // Función para sumar los valores de una clase
+    function sumarPrecios() {
+        var precios = document.getElementsByClassName('precio');
+        var total = 0;
+
+        for (var i = 0; i < precios.length; i++) {
+            total += parseFloat(precios[i].textContent) || 0;
+        }
+
+        // Muestra el total en el elemento con id "total"
+        document.getElementById('totales').textContent = total.toFixed(2);
+        document.getElementById('subtotal').textContent = total.toFixed(2);
+    }
+
+    // Llama a la función al cargar la página
+    window.onload = sumarPrecios;
+</script>
